@@ -1,0 +1,75 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # One universal binary (arm64 + x86_64) covers every Mac.
+          - os: macos-14
+            archive: neonpx-macos-universal.tar.gz
+            make: make dist UNIVERSAL=1
+          # Fully static musl binaries run on any Linux distribution.
+          - os: ubuntu-latest
+            archive: neonpx-linux-x86_64.tar.gz
+            docker: true
+          - os: ubuntu-24.04-arm
+            archive: neonpx-linux-aarch64.tar.gz
+            docker: true
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Build release archive (macOS)
+        if: ${{ !matrix.docker }}
+        run: ${{ matrix.make }} VERSION=${GITHUB_REF_NAME#v}
+
+      - name: Build release archive (Linux, static musl)
+        if: ${{ matrix.docker }}
+        run: |
+          docker run --rm -v "$PWD":/src -w /src alpine:3.20 sh -c \
+            "apk add --no-cache build-base >/dev/null && make test SAN=0 && make dist STATIC=1 VERSION=${GITHUB_REF_NAME#v}"
+          sudo chown -R "$(id -u):$(id -g)" dist build
+
+      - name: Verify archive
+        run: |
+          ls -l dist
+          test -f dist/${{ matrix.archive }}
+          tar -xzf dist/${{ matrix.archive }} -O neonpx > /tmp/neonpx && chmod +x /tmp/neonpx && /tmp/neonpx --version
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: ${{ matrix.archive }}
+          path: dist/${{ matrix.archive }}
+          if-no-files-found: error
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v7
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: Checksums
+        run: cd dist && sha256sum *.tar.gz > sha256sums.txt && cat sha256sums.txt
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            dist/*.tar.gz
+            dist/sha256sums.txt
