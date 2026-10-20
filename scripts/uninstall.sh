@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Removes the neonpx binary installed by scripts/install.sh. neonpx keeps no settings.
+# Removes the NeonPX binary installed by scripts/install.sh. NeonPX keeps no settings.
 
 set -eu
 

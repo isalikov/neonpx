@@ -1,4 +1,4 @@
-# neonpx
+# NeonPX
 
 <p align="center">
   <strong>Who holds my ports, and how hard are they burning.</strong><br>
@@ -10,7 +10,7 @@
   <a href="https://github.com/isalikov/neonpx/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/isalikov/neonpx/ci.yml?style=flat-square&label=ci&color=00f0ff" alt="CI"></a>
 </p>
 
-neonpx shows the `node` / `python` / `bun` / `deno` / … processes and Docker
+NeonPX shows the `node` / `python` / `bun` / `deno` / … processes and Docker
 containers on your machine, which TCP ports they hold, and how much CPU and
 memory they use. Any of them can be killed from the same screen: process
 trees get SIGTERM, then SIGKILL if they hold on, and containers get
@@ -24,7 +24,7 @@ to the `docker` CLI.
 ## Install
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/isalikov/neonpx/master/scripts/install.sh | sh
+curl -fsSL https://dwnl.cc/install-neonpx | sh
 ```
 
 The script downloads the latest release for your platform. macOS gets one
@@ -36,7 +36,7 @@ asset exists, it builds from source with `make` and `cc`.
 Uninstall:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/isalikov/neonpx/master/scripts/uninstall.sh | sh
+curl -fsSL https://dwnl.cc/uninstall-neonpx | sh
 ```
 
 ## Usage
@@ -60,7 +60,7 @@ sudo neonpx         # see and kill processes owned by other users
 
 Environment: `NEONPX_THEME`, `NEONPX_COLOR` (`truecolor`, `256`, `16`, `none`),
 `NO_COLOR`, `DOCKER_HOST` (`unix://` only). Truecolor is detected from
-`COLORTERM` and well-known terminals; otherwise neonpx uses the 256-color palette.
+`COLORTERM` and well-known terminals; otherwise NeonPX uses the 256-color palette.
 
 ## Keyboard
 
@@ -99,12 +99,12 @@ Every kill asks for confirmation (`y` / `enter` confirms, anything else aborts).
 
 ### Docker
 
-neonpx finds the daemon at `$DOCKER_HOST` or the first answering socket
+NeonPX finds the daemon at `$DOCKER_HOST` or the first answering socket
 among Docker Desktop, OrbStack, colima, Rancher Desktop, rootless Docker,
 `/var/run/docker.sock`, and podman.
 
 On macOS a published port is actually held by the VM's port forwarder
-(`com.docker.backend`, OrbStack, `limactl`, …). neonpx attributes those ports
+(`com.docker.backend`, OrbStack, `limactl`, …). NeonPX attributes those ports
 to the container rows and hides the forwarder, so killing ":5432" stops the
 container instead of Docker itself. If you do select a forwarder, the
 confirmation warns you.
@@ -112,11 +112,11 @@ confirmation warns you.
 ### Safety
 
 - The kill target is captured when you press `x`, so re-sorting while the
-  dialog is open can't retarget it. Before signalling, neonpx checks that the
+  dialog is open can't retarget it. Before signalling, NeonPX checks that the
   pid still has the same start time, which guards against pid reuse.
 - Children are collected from the process tree, so `npm run dev` goes down
   together with its `node`.
-- neonpx refuses pid 1 and any tree that contains neonpx itself (for
+- NeonPX refuses pid 1 and any tree that contains NeonPX itself (for
   example, the shell that launched it).
 
 ## Build
@@ -135,6 +135,8 @@ make linux     # static Linux binary via Docker (alpine), handy on a Mac
 make install   # -> ~/.local/bin (PREFIX=...)
 make dist      # release tarball in dist/
 ```
+
+The default version is `1.0.1`, set in `Makefile`; override it with `VERSION=…`.
 
 Releases are built by `.github/workflows/release.yml` when a `v*` tag is
 pushed. It produces `neonpx-macos-universal.tar.gz`,

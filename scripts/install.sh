@@ -44,7 +44,7 @@ esac
 tmp_dir=$(mktemp -d 2>/dev/null || mktemp -d -t neonpx-install)
 trap 'rm -rf "$tmp_dir"' EXIT INT TERM
 
-printf '%s\n' "Installing neonpx ($asset)"
+printf '%s\n' "Installing NeonPX ($asset)"
 
 if curl -fsSL "$release_base/$asset" -o "$tmp_dir/$asset"; then
 	if curl -fsSL "$release_base/sha256sums.txt" -o "$tmp_dir/sha256sums.txt" 2>/dev/null; then

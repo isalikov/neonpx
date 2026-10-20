@@ -22,7 +22,7 @@ void sleep_ms(int ms) {
 }
 
 static void oom(void) {
-    fputs("neonpx: out of memory\n", stderr);
+    fputs("NeonPX: out of memory\n", stderr);
     abort();
 }
 

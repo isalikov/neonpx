@@ -150,7 +150,7 @@ static void layout(int W, cols *c) {
 
 static void draw_logo(int y, uint64_t now) {
     static const uint32_t noise[] = {0x2593, 0x2592, 0x2591, '#', '%', '&', '@', '$', '/', '\\'};
-    const char *word = "NEONPX";
+    const char *word = "NeonPX";
     /* A short glitch burst every few seconds. */
     bool glitch = (now % 5300) < 160 || ((now % 5300) > 300 && (now % 5300) < 360);
     int x = 1;
@@ -717,7 +717,7 @@ static void draw_help(int W, int H) {
     int w = imin(78, W - 4), h = imin(n + 4, H - 2);
     int x = (W - w) / 2, y = imax(0, (H - h) / 2);
     box(x, y, w, h, T->primary);
-    centered(x, w, y, " \xe2\x97\xa2 NEONPX // KEYMAP \xe2\x97\xa4 ", T->primary, ATTR_BOLD);
+    centered(x, w, y, " \xe2\x97\xa2 NeonPX // KEYMAP \xe2\x97\xa4 ", T->primary, ATTR_BOLD);
     for (int i = 0; i < n && 2 + i < h - 1; i++) {
         bool mode = i > 11;
         put(x + 3, y + 2 + i, 16, rows[i][0], mode ? T->primary : T->secondary, RGB_KEEP, ATTR_BOLD);

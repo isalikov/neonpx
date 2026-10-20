@@ -11,7 +11,7 @@ Guidance for AI coding agents working in this repository.
 
 ## What this is
 
-neonpx is a terminal UI that lists dev processes (node, python, bun, …) and Docker containers with their TCP ports, CPU, and memory, and can kill them. It is plain C11 plus POSIX: no third-party code, no ncurses, and no subprocesses (it never runs `lsof`, `ps`, or `docker`).
+NeonPX is a terminal UI that lists dev processes (node, python, bun, …) and Docker containers with their TCP ports, CPU, and memory, and can kill them. It is plain C11 plus POSIX: no third-party code, no ncurses, and no subprocesses (it never runs `lsof`, `ps`, or `docker`).
 
 ## Commands
 
@@ -22,7 +22,7 @@ make linux                 # static Linux build in alpine via Docker, for testin
 ./build/debug/neonpx --list --all   # non-interactive snapshot, handy for checking the backends
 ```
 
-The version comes from `git describe` into the generated `build/version.h`. Override it with `VERSION=…`.
+The default version is set in `Makefile` and written to the generated `build/version.h`. Override it with `VERSION=…`.
 
 ## Architecture
 

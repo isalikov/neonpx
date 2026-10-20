@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.1 — 2026-10-20
+
+- Use the NeonPX name consistently in the UI, CLI messages, and descriptions.
+- Update the install and uninstall links to `https://dwnl.cc/install-neonpx` and `https://dwnl.cc/uninstall-neonpx`.
+- Set the default build version in `Makefile`, with `VERSION` overrides still supported.
+
 ## 1.0.0 — 2026-10-10
 
 - First version: a live TUI of dev processes and Docker containers with their TCP ports, CPU, and memory.

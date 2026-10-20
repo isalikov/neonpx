@@ -27,7 +27,7 @@ typedef struct {
 
 static void usage(FILE *f) {
     fprintf(f,
-            "neonpx %s: who holds my ports, and how hard are they burning.\n"
+            "NeonPX %s: who holds my ports, and how hard are they burning.\n"
             "\n"
             "Usage: neonpx [options]\n"
             "\n"
@@ -53,7 +53,7 @@ static int parse_args(int argc, char **argv, options *o) {
             usage(stdout);
             exit(0);
         } else if (!strcmp(a, "-V") || !strcmp(a, "--version")) {
-            printf("neonpx %s\n", NEONPX_VERSION);
+            printf("NeonPX %s\n", NEONPX_VERSION);
             exit(0);
         } else if (!strcmp(a, "-a") || !strcmp(a, "--all")) {
             o->mode = MODE_ALL;
@@ -68,14 +68,14 @@ static int parse_args(int argc, char **argv, options *o) {
         } else if ((!strcmp(a, "-i") || !strcmp(a, "--interval")) && i + 1 < argc) {
             double s = atof(argv[++i]);
             if (s < 0.25 || s > 10) {
-                fprintf(stderr, "neonpx: interval must be between 0.25 and 10 seconds\n");
+                fprintf(stderr, "NeonPX: interval must be between 0.25 and 10 seconds\n");
                 return -1;
             }
             o->interval_ms = (int)(s * 1000);
         } else if ((!strcmp(a, "-t") || !strcmp(a, "--theme")) && i + 1 < argc) {
             o->theme = argv[++i];
         } else {
-            fprintf(stderr, "neonpx: unknown option '%s'\n\n", a);
+            fprintf(stderr, "NeonPX: unknown option '%s'\n\n", a);
             usage(stderr);
             return -1;
         }
@@ -172,12 +172,12 @@ int main(int argc, char **argv) {
         return 0;
     }
     if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO)) {
-        fprintf(stderr, "neonpx: needs an interactive terminal; use --list for plain output\n");
+        fprintf(stderr, "NeonPX: needs an interactive terminal; use --list for plain output\n");
         return 2;
     }
 
     if (o.theme && *o.theme && !theme_find(o.theme))
-        fprintf(stderr, "neonpx: unknown theme '%s', using neon (available: %s)\n", o.theme, theme_names());
+        fprintf(stderr, "NeonPX: unknown theme '%s', using neon (available: %s)\n", o.theme, theme_names());
     if (o.docker) docker_start();
     model m;
     model_init(&m);
@@ -189,7 +189,7 @@ int main(int argc, char **argv) {
     app_rebuild(&a, &m);
 
     if (term_init() != 0) {
-        fprintf(stderr, "neonpx: cannot switch the terminal to raw mode\n");
+        fprintf(stderr, "NeonPX: cannot switch the terminal to raw mode\n");
         return 1;
     }
     scr_init(scr_detect_color());

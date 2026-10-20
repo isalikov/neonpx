@@ -52,7 +52,7 @@ int kill_start(kill_job *jobs, const sys_proc *procs, size_t n, int pid, int64_t
     int self = getpid();
     for (int i = 0; i < cnt; i++) {
         if (tree[i].pid == self) {
-            snprintf(msg, cap, "\xe2\x9c\x96 refusing: that tree contains neonpx itself");
+            snprintf(msg, cap, "\xe2\x9c\x96 refusing: that tree contains NeonPX itself");
             return LVL_ERR;
         }
     }

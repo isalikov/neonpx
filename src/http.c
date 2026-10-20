@@ -147,7 +147,7 @@ int http_unix(const char *sock_path, const char *method, const char *path, int t
 
     char req[1024];
     int rl = snprintf(req, sizeof req,
-                      "%s %s HTTP/1.0\r\nHost: docker\r\nUser-Agent: neonpx\r\nAccept: application/json\r\n"
+                      "%s %s HTTP/1.0\r\nHost: docker\r\nUser-Agent: NeonPX\r\nAccept: application/json\r\n"
                       "Content-Length: 0\r\n\r\n",
                       method, path);
     if (rl <= 0 || (size_t)rl >= sizeof req || !write_all(fd, req, (size_t)rl)) {

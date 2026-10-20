@@ -1,5 +1,5 @@
 APP      := neonpx
-VERSION  ?= $(shell git describe --tags --always --dirty 2>/dev/null | sed 's/^v//' || echo 0.0.0-dev)
+VERSION  ?= 1.0.1
 ifeq ($(strip $(VERSION)),)
 VERSION  := 0.0.0-dev
 endif
@@ -68,7 +68,7 @@ FMT_FILES := $(SRC) $(wildcard src/*.h) $(TEST_SRC) $(wildcard tests/*.h)
 
 help:
 	@printf "%s\n" \
-		"$(APP) $(VERSION) targets:" \
+		"NeonPX $(VERSION) targets:" \
 		"  make build     - debug build with ASan/UBSan (SAN=0 to disable) -> $(DBG_DIR)/$(APP)" \
 		"  make run       - build and run the debug binary (ARGS='--all')" \
 		"  make release   - optimized, stripped binary -> $(REL_DIR)/$(APP)" \
